@@ -1,28 +1,21 @@
-"""
-Скрипт для наполнения базы данных пользователями и адресами
-"""
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-
 from config import DATABASE_URL
 from models import Address, User
 
-# Создаем фабрику подключений
+
 engine = create_engine(
     DATABASE_URL,
-    echo=True  # Логирование SQL-запросов
+    echo=True
 )
 
-# Создание фабрики сессий
 session_factory = sessionmaker(bind=engine)
 
-# Наполняем БД данными 5 пользователями и их адресами
 with session_factory() as session:
-    # Пользователь 1
+   
     user1 = User(username="john_doe", email="john.doe@example.com")
     session.add(user1)
-    session.flush()  # Получаем ID пользователя
-    
+    session.flush()
     address1_1 = Address(
         user_id=user1.id,
         street="123 Main Street",
@@ -44,7 +37,6 @@ with session_factory() as session:
     session.add(address1_1)
     session.add(address1_2)
     
-    # Пользователь 2
     user2 = User(username="jane_smith", email="jane.smith@example.com")
     session.add(user2)
     session.flush()
@@ -60,7 +52,6 @@ with session_factory() as session:
     )
     session.add(address2_1)
     
-    # Пользователь 3
     user3 = User(username="bob_wilson", email="bob.wilson@example.com")
     session.add(user3)
     session.flush()
@@ -86,7 +77,6 @@ with session_factory() as session:
     session.add(address3_1)
     session.add(address3_2)
     
-    # Пользователь 4
     user4 = User(username="alice_brown", email="alice.brown@example.com")
     session.add(user4)
     session.flush()
@@ -102,7 +92,6 @@ with session_factory() as session:
     )
     session.add(address4_1)
     
-    # Пользователь 5
     user5 = User(username="charlie_davis", email="charlie.davis@example.com")
     session.add(user5)
     session.flush()
@@ -128,7 +117,6 @@ with session_factory() as session:
     session.add(address5_1)
     session.add(address5_2)
     
-    # Сохраняем все изменения
     session.commit()
     print("База данных успешно наполнена 5 пользователями и их адресами!")
 
